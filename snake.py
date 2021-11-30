@@ -8,27 +8,31 @@ def play():
     height = 760
     squar_size = 40
     screen = pygame.display.set_mode((width, height))
-    x = width // 40 // 2
-    y = height // 40 // 2
+    x = width // squar_size * 10
+    y = height // squar_size * 8
     wx = squar_size
     coor = 0
-    coords = [(x, y), (x-squar_size, y), (x-squar_size*2, y)]
-    apple_x = random.randint(100, width-100)
-    apple_y = random.randint(100, height-100)
+    coords = [(x, y), (x - squar_size, y), (x - squar_size * 2, y)]
+    random_coord_for_apple_x = [i for i in range(100, width, squar_size)]
+    random_coord_for_apple_y = [i for i in range(100, height, squar_size)]
+    apple_x = random.choice(random_coord_for_apple_x)
+    apple_y = random.choice(random_coord_for_apple_y)
     scoors = 0
-    image_apple = pygame.image.load("D:/Программирование/Python/crusgok/snake/images/apple.png")
-    tail_snake = pygame.image.load("D:/Программирование/Python/crusgok/snake/images/body_horizontal.png")
-    tail_snake_2 = pygame.image.load("D:/Программирование/Python/crusgok/snake/images/body_vertical.png")
-    head_up = pygame.image.load("D:/Программирование/Python/crusgok/snake/images/head_up.png")
-    head_down = pygame.image.load("D:/Программирование/Python/crusgok/snake/images/head_down.png")
-    head_right = pygame.image.load("D:/Программирование/Python/crusgok/snake/images/head_right.png")
-    head_left = pygame.image.load("D:/Программирование/Python/crusgok/snake/images/head_left.png")
-    wall = pygame.image.load("D:/Программирование/Python/crusgok/snake/images/wall.png")
-    wall_x = random.randint(100, width-100)
-    wall_y = random.randint(100, height-100)
+    image_apple = pygame.image.load("images/apple.png")
+    tail_snake = pygame.image.load("images/body_horizontal.png")
+    tail_snake_2 = pygame.image.load("images/body_vertical.png")
+    head_up = pygame.image.load("images/head_up.png")
+    head_down = pygame.image.load("images/head_down.png")
+    head_right = pygame.image.load("images/head_right.png")
+    head_left = pygame.image.load("images/head_left.png")
+    wall = pygame.image.load("images/wall.png")
+    random_coord_for_wall_x = [i for i in range(100, width, squar_size)]
+    random_coord_for_wall_y = [i for i in range(100, width, squar_size)]
+    wall_x = random.choice(random_coord_for_wall_x)
+    wall_y = random.choice(random_coord_for_wall_y)
     sp = [0, 0, 0]
     r = 0
-    bullet = pygame.image.load("D:/Программирование/Python/crusgok/snake/images/bullet.png")
+    bullet = pygame.image.load("images/bullet.png")
     bullet_x = wall_x
     bullet_y = wall_y
     rose_of_wind = [(0, False), (0, True), (1, False), (1, True)]
@@ -162,24 +166,27 @@ def play():
             y = -35
         elif y <= 0:
             y = height
-        time.sleep(0.20)
         pygame.display.flip()
+        time.sleep(0.20)
 
 
 width = 500
 height = 500
 screen = pygame.display.set_mode((width, height))
-button_play = pygame.draw.rect(screen, (255, 0, 0), (width//2-50, height//2-50, 100, 100))
+font_1 = pygame.font.SysFont("Calibri", 52)
+font_2 = font_1.render("Игра", False, (255, 255, 255))
 while True:
     for l in pygame.event.get():
         if l.type == pygame.QUIT:
             exit(1)
         elif l.type == pygame.MOUSEBUTTONDOWN:
-            if pygame.mouse.get_pos() >= (width//2-50, height//2-50):
-                if pygame.mouse.get_pos() <= (width//2, height//2):
+            if pygame.mouse.get_pos() >= (width // 2 - 52, height // 2 - 50):
+                if pygame.mouse.get_pos() <= (width // 2 + 52, height // 2 + 50):
                     play()
                     width = 500
                     height = 500
                     screen = pygame.display.set_mode((width, height))
-                    button_play = pygame.draw.rect(screen, (255, 0, 0), (width // 2-50, height // 2-50, 100, 100))
+                    font_1 = pygame.font.SysFont("Calibri", 52)
+                    font_2 = font_1.render("Игра", False, (255, 255, 255))
+    screen.blit(font_2, (200, 200))
     pygame.display.flip()
